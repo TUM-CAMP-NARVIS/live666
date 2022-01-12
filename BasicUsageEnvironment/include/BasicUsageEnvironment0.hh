@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Basic Usage Environment: for a simple, non-scripted, console application
 // C++ header
 
@@ -36,7 +36,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 // An abstract base class, useful for subclassing
 // (e.g., to redefine the implementation of "operator<<")
-class LIVEMEDIA_API BasicUsageEnvironment0: public UsageEnvironment {
+class BasicUsageEnvironment0: public UsageEnvironment {
 public:
   // redefined virtual functions:
   virtual MsgString getResultMsg() const;
@@ -71,7 +71,7 @@ class HandlerSet; // forward
 
 // An abstract base class, useful for subclassing
 // (e.g., to redefine the implementation of socket event handling)
-class LIVEMEDIA_API BasicTaskScheduler0: public TaskScheduler {
+class BasicTaskScheduler0: public TaskScheduler {
 public:
   virtual ~BasicTaskScheduler0();
 

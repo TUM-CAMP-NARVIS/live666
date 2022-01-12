@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020, Live Networks, Inc.  All rights reserved
+// Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
 // A demo application, showing how to create and run a RTSP client (that can potentially receive multiple streams concurrently).
 //
 // NOTE: This code - although it builds a running application - is intended only to illustrate how to develop your own RTSP
@@ -26,9 +26,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // Forward function definitions:
 
 // RTSP 'response handlers':
-void continueAfterDESCRIBE(RTSPClient* rtspClient, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
-void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
-void continueAfterPLAY(RTSPClient* rtspClient, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
+void continueAfterDESCRIBE(RTSPClient* rtspClient, int resultCode, char* resultString);
+void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultString);
+void continueAfterPLAY(RTSPClient* rtspClient, int resultCode, char* resultString);
 
 // Other event handler functions:
 void subsessionAfterPlaying(void* clientData); // called when a stream's subsession (e.g., audio or video substream) ends
@@ -188,7 +188,7 @@ void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL) {
 
 // Implementation of the RTSP 'response handlers':
 
-void continueAfterDESCRIBE(RTSPClient* rtspClient, int resultCode, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterDESCRIBE(RTSPClient* rtspClient, int resultCode, char* resultString) {
   do {
     UsageEnvironment& env = rtspClient->envir(); // alias
     StreamClientState& scs = ((ourRTSPClient*)rtspClient)->scs; // alias
@@ -263,7 +263,7 @@ void setupNextSubsession(RTSPClient* rtspClient) {
   }
 }
 
-void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultString) {
   do {
     UsageEnvironment& env = rtspClient->envir(); // alias
     StreamClientState& scs = ((ourRTSPClient*)rtspClient)->scs; // alias
@@ -308,7 +308,7 @@ void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultStri
   setupNextSubsession(rtspClient);
 }
 
-void continueAfterPLAY(RTSPClient* rtspClient, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage) {
+void continueAfterPLAY(RTSPClient* rtspClient, int resultCode, char* resultString) {
   Boolean success = False;
 
   do {

@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP source for a common kind of payload format: Those that pack multiple,
 // complete codec frames (as many as possible) into each RTP packet.
 // Implementation
@@ -74,8 +74,6 @@ MultiFramedRTPSource
 
   // Try to use a big receive buffer for RTP:
   increaseReceiveBufferTo(env, RTPgs->socketNum(), 50*1024);
-
-  fRtpExtHdrCallback = NULL;
 }
 
 void MultiFramedRTPSource::reset() {
@@ -238,7 +236,7 @@ void MultiFramedRTPSource::networkReadHandler1() {
   // Read the network packet, and perform sanity checks on the RTP header:
   Boolean readSuccess = False;
   do {
-    struct sockaddr_in fromAddress;
+    struct sockaddr_storage fromAddress;
     Boolean packetReadWasIncomplete = fPacketReadInProgress != NULL;
     if (!bPacket->fillInData(fRTPInterface, fromAddress, packetReadWasIncomplete)) {
       if (bPacket->bytesAvailable() == 0) { // should not happen??
@@ -296,25 +294,11 @@ void MultiFramedRTPSource::networkReadHandler1() {
     ADVANCE(cc*4);
 
     // Check for (& ignore) any RTP header extension
-    // If a callback is set we pass any header extension info to it
-    unsigned char * extHdrDataPtr = NULL; // Pointer to the extension data (needed because of ADVANCE).
-    unsigned extHdrDataSize = 0; // Size of the extension data.
-    unsigned extHdrDefinedByProfile = 0; // This will be either 0xFFD8 (first MJPEG packet) or 0xFFFF (following MJPEG packets).
-    bool sendExtHdrData = false; // True if RTP header extension available and callback function pointer set.
-
     if (rtpHdr&0x10000000) {
       if (bPacket->dataSize() < 4) break;
       unsigned extHdr = ntohl(*(u_int32_t*)(bPacket->data())); ADVANCE(4);
       unsigned remExtSize = 4*(extHdr&0xFFFF);
       if (bPacket->dataSize() < remExtSize) break;
-      if ( RTPSource::fRtpExtHdrCallback )
-      {
-        // We cannot send the data to the callback function yet since we need the presentation time which is calculated later.
-        extHdrDataPtr = bPacket->data ();
-        extHdrDataSize = remExtSize;
-        extHdrDefinedByProfile = extHdr >> 16;
-        sendExtHdrData = true;
-      }
       ADVANCE(remExtSize);
     }
 
@@ -349,17 +333,9 @@ void MultiFramedRTPSource::networkReadHandler1() {
     // Fill in the rest of the packet descriptor, and store it:
     struct timeval timeNow;
     gettimeofday(&timeNow, NULL);
-
-    if ( sendExtHdrData )
-    {
-       RTPSource::fRtpExtHdrCallback ( extHdrDefinedByProfile, extHdrDataPtr, extHdrDataSize, presentationTime, rtpSeqNo, rtpTimestamp, rtpMarkerBit, RTPSource::fRtpExtHdrCallbackPrivData );
-    }
-
-    // now store the values (could be changed in the 'fRtpExtHdrCallback')
     bPacket->assignMiscParams(rtpSeqNo, rtpTimestamp, presentationTime,
 			      hasBeenSyncedUsingRTCP, rtpMarkerBit,
-			      timeNow);    
-
+			      timeNow);
     if (!fReorderingBuffer->storePacket(bPacket)) break;
 
     readSuccess = True;
@@ -416,7 +392,7 @@ void BufferedPacket
   frameDurationInMicroseconds = 0; // by default.  Subclasses should correct this.
 }
 
-Boolean BufferedPacket::fillInData(RTPInterface& rtpInterface, struct sockaddr_in& fromAddress,
+Boolean BufferedPacket::fillInData(RTPInterface& rtpInterface, struct sockaddr_storage& fromAddress,
 				   Boolean& packetReadWasIncomplete) {
   if (!packetReadWasIncomplete) reset();
 

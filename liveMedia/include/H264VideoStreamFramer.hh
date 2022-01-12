@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A filter that breaks up a H.264 Video Elementary Stream into NAL units.
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "H264or5VideoStreamFramer.hh"
 #endif
 
-class LIVEMEDIA_API H264VideoStreamFramer: public H264or5VideoStreamFramer {
+class H264VideoStreamFramer: public H264or5VideoStreamFramer {
 public:
   static H264VideoStreamFramer* createNew(UsageEnvironment& env, FramedSource* inputSource,
 					  Boolean includeStartCodeInOutput = False,

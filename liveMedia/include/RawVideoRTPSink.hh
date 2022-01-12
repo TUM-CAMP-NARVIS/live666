@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP sink for Raw video
 // C++ header
 
@@ -29,7 +29,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "RawVideoFrameParameters.hh"
 #endif
 
-class LIVEMEDIA_API RawVideoRTPSink: public VideoRTPSink {
+class RawVideoRTPSink: public VideoRTPSink {
 public:
   static RawVideoRTPSink*
   createNew(UsageEnvironment& env, Groupsock* RTPgs, u_int8_t rtpPayloadFormat,

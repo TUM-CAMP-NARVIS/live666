@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP sink for a common kind of payload format: Those which pack multiple,
 // complete codec frames (as many as possible) into each RTP packet.
 // C++ header
@@ -26,7 +26,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "RTPSink.hh"
 #endif
 
-class LIVEMEDIA_API MultiFramedRTPSink: public RTPSink {
+class MultiFramedRTPSink: public RTPSink {
 public:
   void setPacketSizes(unsigned preferredPacketSize, unsigned maxPacketSize);
 

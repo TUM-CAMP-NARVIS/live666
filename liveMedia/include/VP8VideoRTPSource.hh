@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // VP8 Video RTP Sources
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MultiFramedRTPSource.hh"
 #endif
 
-class LIVEMEDIA_API VP8VideoRTPSource: public MultiFramedRTPSource {
+class VP8VideoRTPSource: public MultiFramedRTPSource {
 public:
   static VP8VideoRTPSource*
   createNew(UsageEnvironment& env, Groupsock* RTPgs,

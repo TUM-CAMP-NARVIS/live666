@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A source object for AAC audio files in ADTS format
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "FramedFileSource.hh"
 #endif
 
-class LIVEMEDIA_API ADTSAudioFileSource: public FramedFileSource {
+class ADTSAudioFileSource: public FramedFileSource {
 public:
   static ADTSAudioFileSource* createNew(UsageEnvironment& env,
 				       char const* fileName);

@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020, Live Networks, Inc.  All rights reserved
+// Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
 // A SIP client test program that opens a SIP URL argument,
 // and extracts the data from each incoming RTP stream.
 
@@ -57,7 +57,7 @@ void assignClient(Medium* /*client*/) {
 
 void getOptions(RTSPClient::responseHandler* afterFunc) { 
   ourSIPClient->envir().setResultMsg("NOT SUPPORTED IN CLIENT");
-  afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()), 0, False);
+  afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()));
 }
 
 void getSDPDescription(RTSPClient::responseHandler* afterFunc) {
@@ -68,9 +68,9 @@ void getSDPDescription(RTSPClient::responseHandler* afterFunc) {
     if (addresses.numAddresses() == 0) {
       ourSIPClient->envir() << "Failed to find network address for \"" << proxyServerName << "\"\n";
     } else {
-      NetAddress address = *(addresses.firstAddress());
-      unsigned proxyServerAddress // later, allow for IPv6 #####
-	= *(unsigned*)(address.data());
+      struct sockaddr_storage proxyServerAddress;
+      copyAddress(proxyServerAddress, addresses.firstAddress());
+
       extern unsigned short proxyServerPortNum;
       if (proxyServerPortNum == 0) proxyServerPortNum = 5060; // default
 
@@ -94,7 +94,7 @@ void getSDPDescription(RTSPClient::responseHandler* afterFunc) {
   }
 
   int resultCode = result == NULL ? -1 : 0;
-  afterFunc(NULL, resultCode, strDup(result), 0, False);
+  afterFunc(NULL, resultCode, strDup(result));
 }
 
 void setupSubsession(MediaSubsession* subsession, Boolean /*streamUsingTCP*/, Boolean /*forceMulticastOnUnspecified*/,RTSPClient::responseHandler* afterFunc) {
@@ -143,13 +143,14 @@ void setupSubsession(MediaSubsession* subsession, Boolean /*streamUsingTCP*/, Bo
   subsession->rtcpChannelId = rtcpChannelId;
 
   // Set the RTP and RTCP sockets' destination address and port from the information in the SETUP response (if present):
-  netAddressBits destAddress = subsession->connectionEndpointAddress();
-  if (destAddress != 0) {
+  struct sockaddr_storage destAddress;
+  subsession->getConnectionEndpointAddress(destAddress);
+  if (!addressIsNull(destAddress)) {
     subsession->setDestinations(destAddress);
   }
   ////////// END hack code that should really be implemented in SIPClient //////////
 
-  afterFunc(NULL, 0, NULL, 0, False);
+  afterFunc(NULL, 0, NULL);
 }
 
 void startPlayingSession(MediaSession* /*session*/, double /*start*/, double /*end*/, float /*scale*/, RTSPClient::responseHandler* afterFunc) {
@@ -157,9 +158,9 @@ void startPlayingSession(MediaSession* /*session*/, double /*start*/, double /*e
     //##### This isn't quite right, because we should really be allowing
     //##### for the possibility of this ACK getting lost, by retransmitting
     //##### it *each time* we get a 2xx response from the server.
-    afterFunc(NULL, 0, NULL, 0, False);
+    afterFunc(NULL, 0, NULL);
   } else {
-    afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()), 0, False);
+    afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()));
   }
 }
 void startPlayingSession(MediaSession* /*session*/, const char* /*start*/, const char* /*end*/, float /*scale*/, RTSPClient::responseHandler* afterFunc) {
@@ -168,9 +169,9 @@ void startPlayingSession(MediaSession* /*session*/, const char* /*start*/, const
 
 void tearDownSession(MediaSession* /*session*/, RTSPClient::responseHandler* afterFunc) {
   if (ourSIPClient == NULL || ourSIPClient->sendBYE()) {
-    afterFunc(NULL, 0, NULL, 0, False);
+    afterFunc(NULL, 0, NULL);
   } else {
-    afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()), 0, False);
+    afterFunc(NULL, -1, strDup(ourSIPClient->envir().getResultMsg()));
   }
 }
 

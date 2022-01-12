@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A template for a MediaSource encapsulating an audio/video input device
 // 
 // NOTE: Sections of this code labeled "%%% TO BE WRITTEN %%%" are incomplete, and needto be written by the programmer
@@ -33,7 +33,7 @@ class DeviceParameters {
   //%%% TO BE WRITTEN %%%
 };
 
-class LIVEMEDIA_API DeviceSource: public FramedSource {
+class DeviceSource: public FramedSource {
 public:
   static DeviceSource* createNew(UsageEnvironment& env,
 				 DeviceParameters params);

@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A subclass of "ServerMediaSession" that can be used to create a (unicast) RTSP servers that acts as a 'proxy' for
 // another (unicast or multicast) RTSP/RTP stream.
 // C++ header
@@ -39,7 +39,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // It is used only within the implementation of "ProxyServerMediaSession", but is defined here, in case developers wish to
 // subclass it.
 
-class LIVEMEDIA_API ProxyRTSPClient: public RTSPClient {
+class ProxyRTSPClient: public RTSPClient {
 public:
   ProxyRTSPClient(class ProxyServerMediaSession& ourServerMediaSession, char const* rtspURL,
                   char const* username, char const* password,
@@ -98,7 +98,7 @@ defaultCreateNewProxyRTSPClientFunc(ProxyServerMediaSession& ourServerMediaSessi
 				    portNumBits tunnelOverHTTPPortNum, int verbosityLevel,
 				    int socketNumToServer);
 
-class LIVEMEDIA_API ProxyServerMediaSession: public ServerMediaSession {
+class ProxyServerMediaSession: public ServerMediaSession {
 public:
   static ProxyServerMediaSession* createNew(UsageEnvironment& env,
 					    GenericMediaServer* ourMediaServer, // Note: We can be used by just one server
@@ -146,7 +146,7 @@ protected:
 
   // Subclasses may redefine the following functions, if they want "ProxyServerSubsession"s
   // to create subclassed "Groupsock" and/or "RTCPInstance" objects:
-  virtual Groupsock* createGroupsock(struct in_addr const& addr, Port port);
+  virtual Groupsock* createGroupsock(struct sockaddr_storage const& addr, Port port);
   virtual RTCPInstance* createRTCP(Groupsock* RTCPgs, unsigned totSessionBW, /* in kbps */
 				   unsigned char const* cname, RTPSink* sink);
 
@@ -183,7 +183,7 @@ private:
 // (For multi-subsession (i.e., audio+video) sessions, the outgoing streams' presentation times retain the same relative
 //  separation as those of the incoming streams.)
 
-class LIVEMEDIA_API PresentationTimeSubsessionNormalizer: public FramedFilter {
+class PresentationTimeSubsessionNormalizer: public FramedFilter {
 public:
   void setRTPSink(RTPSink* rtpSink) { fRTPSink = rtpSink; }
 
@@ -214,7 +214,7 @@ private:
   PresentationTimeSubsessionNormalizer* fNext;
 };
 
-class LIVEMEDIA_API PresentationTimeSessionNormalizer: public Medium {
+class PresentationTimeSessionNormalizer: public Medium {
 public:
   PresentationTimeSessionNormalizer(UsageEnvironment& env);
   virtual ~PresentationTimeSessionNormalizer();

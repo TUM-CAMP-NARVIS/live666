@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP source for a common kind of payload format: Those which pack multiple,
 // complete codec frames (as many as possible) into each RTP packet.
 // C++ header
@@ -29,7 +29,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 class BufferedPacket; // forward
 class BufferedPacketFactory; // forward
 
-class LIVEMEDIA_API MultiFramedRTPSource: public RTPSource {
+class MultiFramedRTPSource: public RTPSource {
 protected:
   MultiFramedRTPSource(UsageEnvironment& env, Groupsock* RTPgs,
 		       unsigned char rtpPayloadFormat,
@@ -83,7 +83,7 @@ private:
 // Note that this can be subclassed - if desired - to redefine
 // "nextEnclosedFrameParameters()".
 
-class LIVEMEDIA_API BufferedPacket {
+class BufferedPacket {
 public:
   BufferedPacket();
   virtual ~BufferedPacket();
@@ -91,7 +91,7 @@ public:
   Boolean hasUsableData() const { return fTail > fHead; }
   unsigned useCount() const { return fUseCount; }
 
-  Boolean fillInData(RTPInterface& rtpInterface, struct sockaddr_in& fromAddress, Boolean& packetReadWasIncomplete);
+  Boolean fillInData(RTPInterface& rtpInterface, struct sockaddr_storage& fromAddress, Boolean& packetReadWasIncomplete);
   void assignMiscParams(unsigned short rtpSeqNo, unsigned rtpTimestamp,
 			struct timeval presentationTime,
 			Boolean hasBeenSyncedUsingRTCP,
@@ -148,7 +148,7 @@ private:
 // If you want to subclass "BufferedPacket", then you'll also
 // want to subclass this, to redefine createNewPacket()
 
-class LIVEMEDIA_API BufferedPacketFactory {
+class BufferedPacketFactory {
 public:
   BufferedPacketFactory();
   virtual ~BufferedPacketFactory();

@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A class that encapsulates a Matroska file.
 // C++ header
 
@@ -34,7 +34,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 class MatroskaTrack; // forward
 class MatroskaDemux; // forward
 
-class LIVEMEDIA_API MatroskaFile: public Medium {
+typedef void MatroskaDemuxOnDeletionFunc(void* objectToNotify, MatroskaDemux* demuxBeingDeleted);
+
+class MatroskaFile: public Medium {
 public:
   typedef void (onCreationFunc)(MatroskaFile* newFile, void* clientData);
   static void createNew(UsageEnvironment& env, char const* fileName, onCreationFunc* onCreation, void* onCreationClientData,
@@ -45,8 +47,9 @@ public:
 
   MatroskaTrack* lookup(unsigned trackNumber) const;
 
-  // Create a demultiplexor for extracting tracks from this file.  (Separate clients will typically have separate demultiplexors.)
-  MatroskaDemux* newDemux();
+  MatroskaDemux* newDemux(MatroskaDemuxOnDeletionFunc* onDeletionFunc = NULL, void* objectToNotify = NULL);
+      // Creates a demultiplexor for extracting tracks from this file.
+      // (Separate clients will typically have separate demultiplexors.)
 
   // Parameters of the file ('Segment'); set when the file is parsed:
   unsigned timecodeScale() { return fTimecodeScale; } // in nanoseconds
@@ -135,7 +138,7 @@ private:
 #define MATROSKA_TRACK_TYPE_SUBTITLE 0x04
 #define MATROSKA_TRACK_TYPE_OTHER 0x08
 
-class LIVEMEDIA_API MatroskaTrack {
+class MatroskaTrack {
 public:
   MatroskaTrack();
   virtual ~MatroskaTrack();
@@ -166,7 +169,7 @@ public:
   Boolean haveSubframes() const { return subframeSizeSize > 0; }
 };
 
-class LIVEMEDIA_API MatroskaDemux: public Medium {
+class MatroskaDemux: public Medium {
 public:
   FramedSource* newDemuxedTrack();
   FramedSource* newDemuxedTrack(unsigned& resultTrackNumber);

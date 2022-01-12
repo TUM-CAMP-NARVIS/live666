@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A simplified version of "H264or5VideoStreamFramer" that takes only complete,
 // discrete frames (rather than an arbitrary byte stream) as input.
 // This avoids the parsing and data copying overhead of the full
@@ -28,7 +28,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "H264or5VideoStreamFramer.hh"
 #endif
 
-class LIVEMEDIA_API H264or5VideoStreamDiscreteFramer: public H264or5VideoStreamFramer {
+class H264or5VideoStreamDiscreteFramer: public H264or5VideoStreamFramer {
 protected:
   H264or5VideoStreamDiscreteFramer(int hNumber, UsageEnvironment& env, FramedSource* inputSource,
 				   Boolean includeStartCodeInOutput,

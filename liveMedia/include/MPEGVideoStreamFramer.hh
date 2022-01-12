@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A filter that breaks up an MPEG video elementary stream into
 //   headers and frames
 // C++ header
@@ -26,7 +26,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "FramedFilter.hh"
 #endif
 
-class LIVEMEDIA_API TimeCode {
+class TimeCode {
 public:
   TimeCode();
   virtual ~TimeCode();
@@ -35,7 +35,7 @@ public:
   unsigned days, hours, minutes, seconds, pictures;
 };
 
-class LIVEMEDIA_API MPEGVideoStreamFramer: public FramedFilter {
+class MPEGVideoStreamFramer: public FramedFilter {
 public:
   Boolean& pictureEndMarker() { return fPictureEndMarker; }
       // a hack for implementing the RTP 'M' bit

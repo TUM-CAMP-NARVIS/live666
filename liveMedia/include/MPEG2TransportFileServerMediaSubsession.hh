@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A 'ServerMediaSubsession' object that creates new, unicast, "RTPSink"s
 // on demand, from a MPEG-2 Transport Stream file.
 // C++ header
@@ -40,7 +40,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 class ClientTrickPlayState; // forward
 
-class LIVEMEDIA_API MPEG2TransportFileServerMediaSubsession: public FileServerMediaSubsession {
+class MPEG2TransportFileServerMediaSubsession: public FileServerMediaSubsession {
 public:
   static MPEG2TransportFileServerMediaSubsession*
   createNew(UsageEnvironment& env,
@@ -99,7 +99,7 @@ private:
 // It is used only within the implementation of "MPEG2TransportFileServerMediaSubsession", but is included here,
 // in case subclasses of "MPEG2TransportFileServerMediaSubsession" want to use it.
 
-class LIVEMEDIA_API ClientTrickPlayState {
+class ClientTrickPlayState {
 public:
   ClientTrickPlayState(MPEG2TransportStreamIndexFile* indexFile);
 

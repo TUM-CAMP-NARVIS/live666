@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Basic Usage Environment: for a simple, non-scripted, console application
 // C++ header
 
@@ -24,11 +24,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "Boolean.hh"
 #endif
 
-#include "export.h"
-
 ////////// HandlerSet (etc.) definition //////////
 
-class LIVEMEDIA_API HandlerDescriptor {
+class HandlerDescriptor {
   HandlerDescriptor(HandlerDescriptor* nextHandler);
   virtual ~HandlerDescriptor();
 
@@ -46,7 +44,7 @@ private:
   HandlerDescriptor* fPrevHandler;
 };
 
-class LIVEMEDIA_API HandlerSet {
+class HandlerSet {
 public:
   HandlerSet();
   virtual ~HandlerSet();
@@ -63,7 +61,7 @@ private:
   HandlerDescriptor fHandlers;
 };
 
-class LIVEMEDIA_API HandlerIterator {
+class HandlerIterator {
 public:
   HandlerIterator(HandlerSet& handlerSet);
   virtual ~HandlerIterator();

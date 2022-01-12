@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A class that implements a database that can be accessed to create
 // "FramedFilter" (subclass) objects that transcode one codec into another.
 // The implementation of this class just returns NULL for each codec lookup;
@@ -31,7 +31,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MediaSession.hh"
 #endif
 
-class LIVEMEDIA_API MediaTranscodingTable: public Medium {
+class MediaTranscodingTable: public Medium {
 public:
   virtual FramedFilter*
   lookupTranscoder(MediaSubsession& /*inputCodecDescription*/, // in

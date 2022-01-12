@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A filter for converting a stream of MPEG PES packets to a MPEG-2 Transport Stream
 // C++ header
 
@@ -28,7 +28,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MPEG1or2DemuxedElementaryStream.hh"
 #endif
 
-class LIVEMEDIA_API MPEG2TransportStreamFromPESSource: public MPEG2TransportStreamMultiplexor {
+class MPEG2TransportStreamFromPESSource: public MPEG2TransportStreamMultiplexor {
 public:
   static MPEG2TransportStreamFromPESSource*
   createNew(UsageEnvironment& env, MPEG1or2DemuxedElementaryStream* inputSource);

@@ -14,13 +14,12 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Special objects which, when created, sends a custom RTSP "REGISTER" (or "DEREGISTER") command
 // to a specified client.
 // Implementation
 
 #include "RTSPRegisterSender.hh"
-#include <GroupsockHelper.hh> // for MAKE_SOCKADDR_IN
 
 ////////// RTSPRegisterOrDeregisterSender implementation /////////
 
@@ -50,7 +49,7 @@ RTSPRegisterOrDeregisterSender::RequestRecord_REGISTER_or_DEREGISTER
 				       RTSPClient::responseHandler* rtspResponseHandler,
 				       char const* rtspURLToRegisterOrDeregister,
 				       char const* proxyURLSuffix)
-  : RTSPClient::RequestRecord(cseq, cmdName, rtspResponseHandler, 0, False),
+  : RTSPClient::RequestRecord(cseq, cmdName, rtspResponseHandler),
     fRTSPURLToRegisterOrDeregister(strDup(rtspURLToRegisterOrDeregister)),
     fProxyURLSuffix(strDup(proxyURLSuffix)) {
 }
@@ -76,11 +75,11 @@ RTSPRegisterSender* RTSPRegisterSender
 				verbosityLevel, applicationName);
 }
 
-void RTSPRegisterSender::grabConnection(int& sock, struct sockaddr_in& remoteAddress) {
+void RTSPRegisterSender::grabConnection(int& sock, struct sockaddr_storage& remoteAddress) {
   sock = grabSocket();
 
-  MAKE_SOCKADDR_IN(remoteAddr, fServerAddress, htons(fRemoteClientPortNum));
-  remoteAddress = remoteAddr;
+  remoteAddress = fServerAddress;
+  setPortNum(remoteAddress, htons(fRemoteClientPortNum));
 }
 
 RTSPRegisterSender

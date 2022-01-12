@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A class used for digest authentication.
 // C++ header
 
@@ -25,13 +25,11 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include <Boolean.hh>
 #endif
 
-#include "export.h"
-
 // A class used for digest authentication.
 // The "realm", and "nonce" fields are supplied by the server
 // (in a "401 Unauthorized" response).
 // The "username" and "password" fields are supplied by the client.
-class LIVEMEDIA_API Authenticator {
+class Authenticator {
 public:
   Authenticator();
   Authenticator(char const* username, char const* password, Boolean passwordIsMD5 = False);

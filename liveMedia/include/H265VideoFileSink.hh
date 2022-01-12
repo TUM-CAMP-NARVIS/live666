@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // H.265 Video File Sinks
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "H264or5VideoFileSink.hh"
 #endif
 
-class LIVEMEDIA_API H265VideoFileSink: public H264or5VideoFileSink {
+class H265VideoFileSink: public H264or5VideoFileSink {
 public:
   static H265VideoFileSink* createNew(UsageEnvironment& env, char const* fileName,
 				      char const* sPropVPSStr = NULL,

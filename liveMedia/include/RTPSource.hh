@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP Sources
 // C++ header
 
@@ -33,7 +33,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 class RTPReceptionStatsDB; // forward
 
-class LIVEMEDIA_API RTPSource: public FramedSource {
+class RTPSource: public FramedSource {
 public:
   static Boolean lookupByName(UsageEnvironment& env, char const* sourceName,
 			      RTPSource*& resultSource);
@@ -71,9 +71,9 @@ public:
   Boolean& enableRTCPReports() { return fEnableRTCPReports; }
   Boolean const& enableRTCPReports() const { return fEnableRTCPReports; }
 
-  void setStreamSocket(int sockNum, unsigned char streamChannelId) {
+  void setStreamSocket(int sockNum, unsigned char streamChannelId, TLSState* tlsState) {
     // hack to allow sending RTP over TCP (RFC 2236, section 10.12)
-    fRTPInterface.setStreamSocket(sockNum, streamChannelId);
+    fRTPInterface.setStreamSocket(sockNum, streamChannelId, tlsState);
   }
 
   void setAuxilliaryReadHandler(AuxHandlerFunc* handlerFunc,
@@ -86,12 +86,6 @@ public:
   // RTP sequence numbers and timestamps are usually not useful to receivers.
   // (Our implementation of RTP reception already does all needed handling of RTP sequence numbers and timestamps.)
   u_int16_t curPacketRTPSeqNum() const { return fCurPacketRTPSeqNum; }
-
-  // Taken from: http://lists.live555.com/pipermail/live-devel/2009-April/010424.html
-  // This is used to set a callback to retrieve the RTP Header Extension data
-  typedef void (*RtpExtHdrCallback_t)(unsigned definedByProfile, unsigned char* extHdrData, unsigned extHdrDataLen, struct timeval& presentationTime, unsigned short rtpSeqNo, unsigned rtpTimestamp, bool rtpMarkerBitSet, void* pPriv);
-  void setRtpExtHdrCallback( RtpExtHdrCallback_t callback, void* pPriv ) { fRtpExtHdrCallback = callback; fRtpExtHdrCallbackPrivData = pPriv;}
-
 private: friend class MediaSubsession; // "MediaSubsession" is the only outside class that ever needs to see RTP timestamps!
   u_int32_t curPacketRTPTimestamp() const { return fCurPacketRTPTimestamp; }
 
@@ -111,9 +105,6 @@ protected:
   class RTCPInstance* fRTCPInstanceForMultiplexedRTCPPackets;
   SRTPCryptographicContext* fCrypto;
 
-  RtpExtHdrCallback_t fRtpExtHdrCallback;
-  void* fRtpExtHdrCallbackPrivData;
-
 private:
   // redefined virtual functions:
   virtual Boolean isRTPSource() const;
@@ -131,7 +122,7 @@ private:
 
 class RTPReceptionStats; // forward
 
-class LIVEMEDIA_API RTPReceptionStatsDB {
+class RTPReceptionStatsDB {
 public:
   unsigned totNumPacketsReceived() const { return fTotNumPacketsReceived; }
   unsigned numActiveSourcesSinceLastReset() const {
@@ -142,7 +133,7 @@ public:
       // resets periodic stats (called each time they're used to
       // generate a reception report)
 
-  class LIVEMEDIA_API Iterator {
+  class Iterator {
   public:
     Iterator(RTPReceptionStatsDB& receptionStatsDB);
     virtual ~Iterator();
@@ -190,7 +181,7 @@ private:
   unsigned fTotNumPacketsReceived; // for all SSRCs
 };
 
-class LIVEMEDIA_API RTPReceptionStats {
+class RTPReceptionStats {
 public:
   u_int32_t SSRC() const { return fSSRC; }
   unsigned numPacketsReceivedSinceLastReset() const {
@@ -275,7 +266,7 @@ private:
 };
 
 
-LIVEMEDIA_API Boolean seqNumLT(u_int16_t s1, u_int16_t s2);
+Boolean seqNumLT(u_int16_t s1, u_int16_t s2);
   // a 'less-than' on 16-bit sequence numbers
 
 #endif

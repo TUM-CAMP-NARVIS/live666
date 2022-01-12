@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // 'Ogg' File Sink (recording a single media track only)
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "FileSink.hh"
 #endif
 
-class LIVEMEDIA_API OggFileSink: public FileSink {
+class OggFileSink: public FileSink {
 public:
   static OggFileSink* createNew(UsageEnvironment& env, char const* fileName,
 				unsigned samplingFrequency = 0, // used for granule_position

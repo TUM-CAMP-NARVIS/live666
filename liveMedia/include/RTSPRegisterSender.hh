@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Special objects which, when created, sends a custom RTSP "REGISTER" (or "DEREGISTER") command
 // to a specified client.
 // C++ header
@@ -26,7 +26,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "RTSPClient.hh"
 #endif
 
-class LIVEMEDIA_API RTSPRegisterOrDeregisterSender: public RTSPClient {
+class RTSPRegisterOrDeregisterSender: public RTSPClient {
 public:
   virtual ~RTSPRegisterOrDeregisterSender();
 protected: // we're a virtual base class
@@ -55,7 +55,7 @@ protected:
 
 //////////
 
-class LIVEMEDIA_API RTSPRegisterSender: public RTSPRegisterOrDeregisterSender {
+class RTSPRegisterSender: public RTSPRegisterOrDeregisterSender {
 public:
   static RTSPRegisterSender*
   createNew(UsageEnvironment& env,
@@ -64,7 +64,7 @@ public:
 	    Boolean requestStreamingViaTCP = False, char const* proxyURLSuffix = NULL, Boolean reuseConnection = False,
 	    int verbosityLevel = 0, char const* applicationName = NULL);
 
-  void grabConnection(int& sock, struct sockaddr_in& remoteAddress); // so that the socket doesn't get closed when we're deleted
+  void grabConnection(int& sock, struct sockaddr_storage& remoteAddress); // so that the socket doesn't get closed when we're deleted
 
 protected:
   RTSPRegisterSender(UsageEnvironment& env,
@@ -100,7 +100,7 @@ public: // Some compilers complain if this is "protected:"
 
 //////////
 
-class LIVEMEDIA_API RTSPDeregisterSender: public RTSPRegisterOrDeregisterSender {
+class RTSPDeregisterSender: public RTSPRegisterOrDeregisterSender {
 public:
   static RTSPDeregisterSender*
   createNew(UsageEnvironment& env,

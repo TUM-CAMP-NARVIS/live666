@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A simplified version of "MPEG1or2VideoStreamFramer" that takes only
 // complete, discrete frames (rather than an arbitrary byte stream) as input.
 // This avoids the parsing and data copying overhead of the full
@@ -30,7 +30,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #define VSH_MAX_SIZE 1000
 
-class LIVEMEDIA_API MPEG1or2VideoStreamDiscreteFramer: public MPEG1or2VideoStreamFramer {
+class MPEG1or2VideoStreamDiscreteFramer: public MPEG1or2VideoStreamFramer {
 public:
   static MPEG1or2VideoStreamDiscreteFramer*
   createNew(UsageEnvironment& env, FramedSource* inputSource,

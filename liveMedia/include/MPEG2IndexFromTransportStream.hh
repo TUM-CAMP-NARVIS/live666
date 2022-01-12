@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A filter that produces a sequence of I-frame indices from a MPEG-2 Transport Stream
 // C++ header
 
@@ -35,7 +35,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 class IndexRecord; // forward
 
-class LIVEMEDIA_API MPEG2IFrameIndexFromTransportStream: public FramedFilter {
+class MPEG2IFrameIndexFromTransportStream: public FramedFilter {
 public:
   static MPEG2IFrameIndexFromTransportStream*
   createNew(UsageEnvironment& env, FramedSource* inputSource);

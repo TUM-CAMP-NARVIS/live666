@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A filter that breaks up an MPEG 1 or 2 video elementary stream into
 //   frames for: Video_Sequence_Header, GOP_Header, Picture_Header
 // C++ header
@@ -26,7 +26,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MPEGVideoStreamFramer.hh"
 #endif
 
-class LIVEMEDIA_API MPEG1or2VideoStreamFramer: public MPEGVideoStreamFramer {
+class MPEG1or2VideoStreamFramer: public MPEGVideoStreamFramer {
 public:
   static MPEG1or2VideoStreamFramer*
       createNew(UsageEnvironment& env, FramedSource* inputSource,

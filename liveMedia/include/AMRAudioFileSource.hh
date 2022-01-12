@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A source object for AMR audio files (as defined in RFC 4867, section 5)
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "AMRAudioSource.hh"
 #endif
 
-class LIVEMEDIA_API AMRAudioFileSource: public AMRAudioSource {
+class AMRAudioFileSource: public AMRAudioSource {
 public:
   static AMRAudioFileSource* createNew(UsageEnvironment& env,
 				       char const* fileName);

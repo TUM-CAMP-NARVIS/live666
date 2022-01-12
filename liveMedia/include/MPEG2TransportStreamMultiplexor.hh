@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A class for generating MPEG-2 Transport Stream from one or more input
 // Elementary Stream data sources
 // C++ header
@@ -31,7 +31,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #define PID_TABLE_SIZE 0x2000 // 2^13
 
-class LIVEMEDIA_API MPEG2TransportStreamMultiplexor: public FramedSource {
+class MPEG2TransportStreamMultiplexor: public FramedSource {
 public:
   typedef void (onEndOfSegmentFunc)(void* clientData, double segmentDuration);
   void setTimedSegmentation(unsigned segmentationDuration,

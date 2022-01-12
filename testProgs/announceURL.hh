@@ -13,13 +13,18 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Version information for the "UsageEnvironment" library
-// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
+// A common function that outputs the URL(s) that can be used to access a stream
+// served by a RTSP server.
+// C++ header
 
-#ifndef _USAGEENVIRONMENT_VERSION_HH
-#define _USAGEENVIRONMENT_VERSION_HH
+#ifndef _ANNOUNCE_URL_HH
+#define _ANNOUNCE_URL_HH
 
-#define USAGEENVIRONMENT_LIBRARY_VERSION_STRING	"2022.01.11"
-#define USAGEENVIRONMENT_LIBRARY_VERSION_INT		1641859200
+#ifndef _LIVEMEDIA_HH
+#include "liveMedia.hh"
+#endif
+
+void announceURL(RTSPServer* rtspServer, ServerMediaSession* sms);
 
 #endif

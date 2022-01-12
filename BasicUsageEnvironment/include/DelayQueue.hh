@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
- // Copyright (c) 1996-2020, Live Networks, Inc.  All rights reserved
+ // Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
 // Delay queue
 // C++ header
 
@@ -24,8 +24,6 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "NetCommon.h"
 #endif
 
-#include "export.h"
-
 #ifdef TIME_BASE
 typedef TIME_BASE time_base_seconds;
 #else
@@ -34,7 +32,7 @@ typedef long time_base_seconds;
 
 ///// A "Timeval" can be either an absolute time, or a time interval /////
 
-class LIVEMEDIA_API Timeval {
+class Timeval {
 public:
   time_base_seconds seconds() const {
     return fTv.tv_sec;
@@ -103,7 +101,7 @@ class DelayInterval operator-(Timeval const& arg1, Timeval const& arg2);
 
 ///// DelayInterval /////
 
-class LIVEMEDIA_API DelayInterval: public Timeval {
+class DelayInterval: public Timeval {
 public:
   DelayInterval(time_base_seconds seconds, time_base_seconds useconds)
     : Timeval(seconds, useconds) {}
@@ -119,7 +117,7 @@ extern DelayInterval const DELAY_DAY;
 
 ///// _EventTime /////
 
-class LIVEMEDIA_API _EventTime: public Timeval {
+class _EventTime: public Timeval {
 public:
   _EventTime(unsigned secondsSinceEpoch = 0,
 	    unsigned usecondsSinceEpoch = 0)
@@ -134,7 +132,7 @@ extern _EventTime const THE_END_OF_TIME;
 
 ///// DelayQueueEntry /////
 
-class LIVEMEDIA_API DelayQueueEntry {
+class DelayQueueEntry {
 public:
   virtual ~DelayQueueEntry();
 
@@ -159,7 +157,7 @@ private:
 
 ///// DelayQueue /////
 
-class LIVEMEDIA_API DelayQueue: public DelayQueueEntry {
+class DelayQueue: public DelayQueueEntry {
 public:
   DelayQueue();
   virtual ~DelayQueue();

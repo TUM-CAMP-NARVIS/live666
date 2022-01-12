@@ -14,14 +14,14 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Parameters used for streaming (transmitting and receiving) raw video frames over RTP
 // C++ header
 
 #ifndef _RAW_VIDEO_FRAME_PARAMETERS_HH
 #define _RAW_VIDEO_FRAME_PARAMETERS_HH
 
-class LIVEMEDIA_API RawVideoFrameParameters {
+class RawVideoFrameParameters {
 public:
   RawVideoFrameParameters(unsigned width, unsigned height, unsigned depth, char const* sampling);
   virtual ~RawVideoFrameParameters();

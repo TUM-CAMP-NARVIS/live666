@@ -86,7 +86,6 @@ list ( APPEND ${PROJECT_NAME}_HEADERS_GROUPSOCK
    ${${PROJECT_NAME}_HOME}/groupsock/include/NetAddress.hh
    ${${PROJECT_NAME}_HOME}/groupsock/include/NetCommon.h
    ${${PROJECT_NAME}_HOME}/groupsock/include/NetInterface.hh
-   ${${PROJECT_NAME}_HOME}/groupsock/include/TunnelEncaps.hh
 )
 # Group (Filter) source files
 source_group ( "Header Files\\groupsock" FILES ${${PROJECT_NAME}_HEADERS_GROUPSOCK} )
@@ -121,7 +120,6 @@ list ( APPEND ${PROJECT_NAME}_HEADERS_LIVEMEDIA
    ${${PROJECT_NAME}_HOME}/liveMedia/include/DVVideoRTPSink.hh
    ${${PROJECT_NAME}_HOME}/liveMedia/include/DVVideoRTPSource.hh
    ${${PROJECT_NAME}_HOME}/liveMedia/include/DVVideoStreamFramer.hh
-   ${${PROJECT_NAME}_HOME}/liveMedia/include/export.h
    ${${PROJECT_NAME}_HOME}/liveMedia/include/FileServerMediaSubsession.hh
    ${${PROJECT_NAME}_HOME}/liveMedia/include/FileSink.hh
    ${${PROJECT_NAME}_HOME}/liveMedia/include/FramedFileSource.hh

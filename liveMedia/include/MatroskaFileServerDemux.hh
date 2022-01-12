@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A server demultiplexor for a Matroska file
 // C++ header
 
@@ -29,7 +29,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MatroskaFile.hh"
 #endif
 
-class LIVEMEDIA_API MatroskaFileServerDemux: public Medium {
+class MatroskaFileServerDemux: public Medium {
 public:
   typedef void (onCreationFunc)(MatroskaFileServerDemux* newDemux, void* clientData);
   static void createNew(UsageEnvironment& env, char const* fileName,
@@ -67,6 +67,10 @@ private:
 
   static void onMatroskaFileCreation(MatroskaFile* newFile, void* clientData);
   void onMatroskaFileCreation(MatroskaFile* newFile);
+
+  static void onDemuxDeletion(void* clientData, MatroskaDemux* demuxBeingDeleted);
+  void onDemuxDeletion(MatroskaDemux* demuxBeingDeleted);
+
 private:
   char const* fFileName; 
   onCreationFunc* fOnCreation;

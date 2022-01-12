@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A class that encapsulates an Ogg file
 // C++ header
 
@@ -31,7 +31,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 class OggTrack; // forward
 class OggDemux; // forward
 
-class LIVEMEDIA_API OggFile: public Medium {
+typedef void OggDemuxOnDeletionFunc(void* objectToNotify, OggDemux* demuxBeingDeleted);
+
+class OggFile: public Medium {
 public:
   typedef void (onCreationFunc)(OggFile* newFile, void* clientData);
   static void createNew(UsageEnvironment& env, char const* fileName,
@@ -44,7 +46,7 @@ public:
 
   OggTrack* lookup(u_int32_t trackNumber);
 
-  OggDemux* newDemux();
+  OggDemux* newDemux(OggDemuxOnDeletionFunc* onDeletionFunc = NULL, void* objectToNotify = NULL);
       // Creates a demultiplexor for extracting tracks from this file.
       // (Separate clients will typically have separate demultiplexors.)
 
@@ -87,7 +89,7 @@ private:
   class OggFileParser* fParserForInitialization;
 };
 
-class LIVEMEDIA_API OggTrack {
+class OggTrack {
 public:
   OggTrack();
   virtual ~OggTrack();
@@ -126,7 +128,7 @@ public:
     }
 };
 
-class LIVEMEDIA_API OggTrackTableIterator {
+class OggTrackTableIterator {
 public:
   OggTrackTableIterator(class OggTrackTable& ourTable);
   virtual ~OggTrackTableIterator();
@@ -137,7 +139,7 @@ private:
   HashTable::Iterator* fIter;
 };
 
-class LIVEMEDIA_API OggDemux: public Medium {
+class OggDemux: public Medium {
 public:
   FramedSource* newDemuxedTrack(u_int32_t& resultTrackNumber);
     // Returns a new stream ("FramedSource" subclass) that represents the next media track

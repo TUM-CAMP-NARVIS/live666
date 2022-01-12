@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // H.264 Video RTP Sources
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MultiFramedRTPSource.hh"
 #endif
 
-class LIVEMEDIA_API H264VideoRTPSource: public MultiFramedRTPSource {
+class H264VideoRTPSource: public MultiFramedRTPSource {
 public:
   static H264VideoRTPSource*
   createNew(UsageEnvironment& env, Groupsock* RTPgs,
@@ -51,7 +51,7 @@ private:
   unsigned char fCurPacketNALUnitType;
 };
 
-class LIVEMEDIA_API SPropRecord {
+class SPropRecord {
 public:
   ~SPropRecord() { delete[] sPropBytes; }
 
@@ -59,7 +59,7 @@ public:
   unsigned char* sPropBytes;
 };
 
-LIVEMEDIA_API SPropRecord* parseSPropParameterSets(char const* sPropParameterSetsStr,
+SPropRecord* parseSPropParameterSets(char const* sPropParameterSetsStr,
 				     // result parameter:
 				     unsigned& numSPropRecords);
     // Returns the binary value of each 'parameter set' specified in a

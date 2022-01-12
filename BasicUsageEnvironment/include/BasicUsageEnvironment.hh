@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Basic Usage Environment: for a simple, non-scripted, console application
 // C++ header
 
@@ -24,7 +24,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "BasicUsageEnvironment0.hh"
 #endif
 
-class LIVEMEDIA_API BasicUsageEnvironment: public BasicUsageEnvironment0 {
+class BasicUsageEnvironment: public BasicUsageEnvironment0 {
 public:
   static BasicUsageEnvironment* createNew(TaskScheduler& taskScheduler);
 
@@ -44,7 +44,7 @@ protected:
 };
 
 
-class LIVEMEDIA_API BasicTaskScheduler: public BasicTaskScheduler0 {
+class BasicTaskScheduler: public BasicTaskScheduler0 {
 public:
   static BasicTaskScheduler* createNew(unsigned maxSchedulerGranularity = 10000/*microseconds*/);
     // "maxSchedulerGranularity" (default value: 10 ms) specifies the maximum time that we wait (in "select()") before

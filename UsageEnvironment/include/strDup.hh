@@ -17,23 +17,21 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _STRDUP_HH
 #define _STRDUP_HH
 
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A C++ equivalent to the standard C routine "strdup()".
 // This generates a char* that can be deleted using "delete[]"
 // Header
 
 #include <string.h>
 
-#include "export.h"
-
-LIVEMEDIA_API char* strDup(char const* str);
+char* strDup(char const* str);
 // Note: strDup(NULL) returns NULL
 
-LIVEMEDIA_API char* strDupSize(char const* str);
+char* strDupSize(char const* str);
 // Like "strDup()", except that it *doesn't* copy the original.
 // (Instead, it just allocates a string of the same size as the original.)
 
-LIVEMEDIA_API char* strDupSize(char const* str, size_t& resultBufSize);
+char* strDupSize(char const* str, size_t& resultBufSize);
 // An alternative form of "strDupSize()" that also returns the size of the allocated buffer.
 
 #endif

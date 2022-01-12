@@ -14,22 +14,29 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
-// A program that prints out this computer's audio input ports
+// A common function that outputs the URL(s) that can be used to access a stream
+// served by a RTSP server.
+// Implementation
 
-#include "AudioInputDevice.hh"
-#include <stdio.h>
+#include "announceURL.hh"
+#include <GroupsockHelper.hh> // for "weHaveAnIPv*Address()"
 
-int main(int argc, char** argv) {
-	AudioPortNames* portNames = AudioInputDevice::getPortNames();
-	if (portNames == NULL) {
-		fprintf(stderr, "AudioInputDevice::getPortNames() failed!\n");
-		exit(1);
-	}
+void announceURL(RTSPServer* rtspServer, ServerMediaSession* sms) {
+  if (rtspServer == NULL || sms == NULL) return; // sanuty check
 
-	printf("%d available audio input ports:\n", portNames->numPorts);
-	for (unsigned i = 0; i < portNames->numPorts; ++i) {
-		printf("%d\t%s\n", i, portNames->portName[i]);
-	}
+  UsageEnvironment& env = rtspServer->envir();
 
-  return 0;
+  env << "Play this stream using the URL ";
+  if (weHaveAnIPv4Address(env)) {
+    char* url = rtspServer->ipv4rtspURL(sms);
+    env << "\"" << url << "\"";
+    delete[] url;
+    if (weHaveAnIPv6Address(env)) env << " or ";
+  }
+  if (weHaveAnIPv6Address(env)) {
+    char* url = rtspServer->ipv6rtspURL(sms);
+    env << "\"" << url << "\"";
+    delete[] url;
+  }
+  env << "\n";
 }

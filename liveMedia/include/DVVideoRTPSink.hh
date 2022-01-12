@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP sink for DV video (RFC 3189)
 // (Thanks to Ben Hutchings for prototyping this.)
 // C++ header
@@ -29,7 +29,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "DVVideoStreamFramer.hh"
 #endif
 
-class LIVEMEDIA_API DVVideoRTPSink: public VideoRTPSink {
+class DVVideoRTPSink: public VideoRTPSink {
 public:
   static DVVideoRTPSink* createNew(UsageEnvironment& env, Groupsock* RTPgs, unsigned char rtpPayloadFormat);
   char const* auxSDPLineFromFramer(DVVideoStreamFramer* framerSource);

@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020, Live Networks, Inc.  All rights reserved
+// Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
 // A common framework, used for the "openRTSP" and "playSIP" applications
 // Implementation
 //
@@ -35,11 +35,11 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // Forward function definitions:
 void continueAfterClientCreation0(RTSPClient* client, Boolean requestStreamingOverTCP);
 void continueAfterClientCreation1();
-void continueAfterOPTIONS(RTSPClient* client, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
-void continueAfterDESCRIBE(RTSPClient* client, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
-void continueAfterSETUP(RTSPClient* client, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
-void continueAfterPLAY(RTSPClient* client, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
-void continueAfterTEARDOWN(RTSPClient* client, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage);
+void continueAfterOPTIONS(RTSPClient* client, int resultCode, char* resultString);
+void continueAfterDESCRIBE(RTSPClient* client, int resultCode, char* resultString);
+void continueAfterSETUP(RTSPClient* client, int resultCode, char* resultString);
+void continueAfterPLAY(RTSPClient* client, int resultCode, char* resultString);
+void continueAfterTEARDOWN(RTSPClient* client, int resultCode, char* resultString);
 
 void createOutputFiles(char const* periodicFilenameSuffix);
 void createPeriodicOutputFiles();
@@ -212,7 +212,13 @@ int main(int argc, char** argv) {
 	*env << "Failed to find network address for \"" << argv[2] << "\"";
 	break;
       }
-      ReceivingInterfaceAddr = *(unsigned*)(addresses.firstAddress()->data());
+
+      struct sockaddr_storage interfaceAddress;
+
+      copyAddress(interfaceAddress, addresses.firstAddress());
+      if (interfaceAddress.ss_family == AF_INET) { // later, support IPv6 also
+	ReceivingInterfaceAddr = ((sockaddr_in&)interfaceAddress).sin_addr.s_addr;
+      }
       ++argv; --argc;
       break;
     }
@@ -653,11 +659,11 @@ void continueAfterClientCreation1() {
     // Begin by sending an "OPTIONS" command:
     getOptions(continueAfterOPTIONS);
   } else {
-    continueAfterOPTIONS(NULL, 0, NULL, 0, False);
+    continueAfterOPTIONS(NULL, 0, NULL);
   }
 }
 
-void continueAfterOPTIONS(RTSPClient*, int resultCode, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterOPTIONS(RTSPClient*, int resultCode, char* resultString) {
   if (sendOptionsRequestOnly) {
     if (resultCode != 0) {
       *env << clientProtocolName << " \"OPTIONS\" request failed: " << resultString << "\n";
@@ -672,7 +678,7 @@ void continueAfterOPTIONS(RTSPClient*, int resultCode, char* resultString, size_
   getSDPDescription(continueAfterDESCRIBE);
 }
 
-void continueAfterDESCRIBE(RTSPClient*, int resultCode, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterDESCRIBE(RTSPClient*, int resultCode, char* resultString) {
   if (resultCode != 0) {
     *env << "Failed to get a SDP description for the URL \"" << streamURL << "\": " << resultString << "\n";
     delete[] resultString;
@@ -782,7 +788,7 @@ void continueAfterDESCRIBE(RTSPClient*, int resultCode, char* resultString, size
 
 MediaSubsession *subsession;
 Boolean madeProgress = False;
-void continueAfterSETUP(RTSPClient* client, int resultCode, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterSETUP(RTSPClient* client, int resultCode, char* resultString) {
   if (resultCode == 0) {
       *env << "Setup \"" << subsession->mediumName()
 	   << "/" << subsession->codecName()
@@ -1035,7 +1041,7 @@ void setupStreams() {
   }
 }
 
-void continueAfterPLAY(RTSPClient*, int resultCode, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterPLAY(RTSPClient*, int resultCode, char* resultString) {
   if (resultCode != 0) {
     *env << "Failed to start playing session: " << resultString << "\n";
     delete[] resultString;
@@ -1418,10 +1424,10 @@ void shutdown(int exitCode) {
     tearDownSession(session, responseHandlerForTEARDOWN);
   }
 
-  if (shutdownImmediately) continueAfterTEARDOWN(NULL, 0, NULL, 0, False);
+  if (shutdownImmediately) continueAfterTEARDOWN(NULL, 0, NULL);
 }
 
-void continueAfterTEARDOWN(RTSPClient*, int /*resultCode*/, char* resultString, size_t /*cmdId*/, Boolean /*suppressMessage*/) {
+void continueAfterTEARDOWN(RTSPClient*, int /*resultCode*/, char* resultString) {
   delete[] resultString;
 
   // Now that we've stopped any more incoming data from arriving, close our output files:

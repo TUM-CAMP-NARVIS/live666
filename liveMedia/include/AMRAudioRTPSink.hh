@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP sink for AMR audio (RFC 4867)
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "AudioRTPSink.hh"
 #endif
 
-class LIVEMEDIA_API AMRAudioRTPSink: public AudioRTPSink {
+class AMRAudioRTPSink: public AudioRTPSink {
 public:
   static AMRAudioRTPSink* createNew(UsageEnvironment& env,
 				    Groupsock* RTPgs,

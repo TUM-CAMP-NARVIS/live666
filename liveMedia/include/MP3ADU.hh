@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // 'ADU' MP3 streams (for improved loss-tolerance)
 // C++ header
 
@@ -25,7 +25,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "FramedFilter.hh"
 #endif
 
-class LIVEMEDIA_API ADUFromMP3Source: public FramedFilter {
+class ADUFromMP3Source: public FramedFilter {
 public:
   static ADUFromMP3Source* createNew(UsageEnvironment& env,
 				     FramedSource* inputSource,
@@ -63,7 +63,7 @@ private:
   unsigned fFrameCounter;
 };
 
-class LIVEMEDIA_API MP3FromADUSource: public FramedFilter {
+class MP3FromADUSource: public FramedFilter {
 public:
   static MP3FromADUSource* createNew(UsageEnvironment& env,
 				     FramedSource* inputSource,

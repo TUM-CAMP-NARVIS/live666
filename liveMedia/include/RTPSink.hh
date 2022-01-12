@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP Sinks
 // C++ header
 
@@ -28,9 +28,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "RTPInterface.hh"
 #endif
 
+#ifndef _MIKEY_HH
+#include "MIKEY.hh"
+#endif
+
 class RTPTransmissionStatsDB; // forward
 
-class LIVEMEDIA_API RTPSink: public MediaSink {
+class RTPSink: public MediaSink {
 public:
   static Boolean lookupByName(UsageEnvironment& env, char const* sinkName,
 			      RTPSink*& resultSink);
@@ -50,6 +54,7 @@ public:
 
   virtual char const* sdpMediaType() const; // for use in SDP m= lines
   virtual char* rtpmapLine() const; // returns a string to be delete[]d
+  virtual char* keyMgmtLine(Boolean streamingIsEncrypted); // returns a string to be delete[]d
   virtual char const* auxSDPLine();
       // optional SDP line (e.g. a=fmtp:...)
 
@@ -75,11 +80,11 @@ public:
   void resetPresentationTimes();
 
   // Hacks to allow sending RTP over TCP (RFC 2236, section 10.12):
-  void setStreamSocket(int sockNum, unsigned char streamChannelId) {
-    fRTPInterface.setStreamSocket(sockNum, streamChannelId);
+  void setStreamSocket(int sockNum, unsigned char streamChannelId, TLSState* tlsState) {
+    fRTPInterface.setStreamSocket(sockNum, streamChannelId, tlsState);
   }
-  void addStreamSocket(int sockNum, unsigned char streamChannelId) {
-    fRTPInterface.addStreamSocket(sockNum, streamChannelId);
+  void addStreamSocket(int sockNum, unsigned char streamChannelId, TLSState* tlsState) {
+    fRTPInterface.addStreamSocket(sockNum, streamChannelId, tlsState);
   }
   void removeStreamSocket(int sockNum, unsigned char streamChannelId) {
     fRTPInterface.removeStreamSocket(sockNum, streamChannelId);
@@ -113,6 +118,7 @@ protected:
   struct timeval fTotalOctetCountStartTime, fInitialPresentationTime, fMostRecentPresentationTime;
   u_int32_t fCurrentTimestamp;
   u_int16_t fSeqNo;
+  MIKEYState* fMIKEYState; // used if we are streaming SRTP
 
 private:
   // redefined virtual functions:
@@ -134,7 +140,7 @@ private:
 
 class RTPTransmissionStats; // forward
 
-class LIVEMEDIA_API RTPTransmissionStatsDB {
+class RTPTransmissionStatsDB {
 public:
   unsigned numReceivers() const { return fNumReceivers; }
 
@@ -151,7 +157,7 @@ public:
   };
 
   // The following is called whenever a RTCP RR packet is received:
-  void noteIncomingRR(u_int32_t SSRC, struct sockaddr_in const& lastFromAddress,
+  void noteIncomingRR(u_int32_t SSRC, struct sockaddr_storage const& lastFromAddress,
                       unsigned lossStats, unsigned lastPacketNumReceived,
                       unsigned jitter, unsigned lastSRTime, unsigned diffSR_RRTime);
 
@@ -175,10 +181,10 @@ private:
   HashTable* fTable;
 };
 
-class LIVEMEDIA_API RTPTransmissionStats {
+class RTPTransmissionStats {
 public:
   u_int32_t SSRC() const {return fSSRC;}
-  struct sockaddr_in const& lastFromAddress() const {return fLastFromAddress;}
+  struct sockaddr_storage const& lastFromAddress() const {return fLastFromAddress;}
   unsigned lastPacketNumReceived() const {return fLastPacketNumReceived;}
   unsigned firstPacketNumReported() const {return fFirstPacketNumReported;}
   unsigned totNumPacketsLost() const {return fTotNumPacketsLost;}
@@ -205,7 +211,7 @@ private:
   RTPTransmissionStats(RTPSink& rtpSink, u_int32_t SSRC);
   virtual ~RTPTransmissionStats();
 
-  void noteIncomingRR(struct sockaddr_in const& lastFromAddress,
+  void noteIncomingRR(struct sockaddr_storage const& lastFromAddress,
 		      unsigned lossStats, unsigned lastPacketNumReceived,
                       unsigned jitter,
 		      unsigned lastSRTime, unsigned diffSR_RRTime);
@@ -213,7 +219,7 @@ private:
 private:
   RTPSink& fOurRTPSink;
   u_int32_t fSSRC;
-  struct sockaddr_in fLastFromAddress;
+  struct sockaddr_storage fLastFromAddress;
   unsigned fLastPacketNumReceived;
   u_int8_t fPacketLossRatio;
   unsigned fTotNumPacketsLost;

@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020, Live Networks, Inc.  All rights reserved
+// Copyright (c) 1996-2022, Live Networks, Inc.  All rights reserved
 // A demonstration application that uses our custom RTSP "REGISTER" command to register a stream
 // (given by "rtsp://" URL) with a RTSP client or proxy server
 // main program
@@ -28,7 +28,7 @@ Boolean requestStreamingViaTCP = False;
 char const* username = NULL;
 char const* password = NULL;
 
-void registerResponseHandler(RTSPClient* rtspClient, int resultCode, char* resultString, size_t cmdId, Boolean suppressMessage) {
+void registerResponseHandler(RTSPClient* rtspClient, int resultCode, char* resultString) {
   Medium::close(rtspClient);
 
   // We're done:

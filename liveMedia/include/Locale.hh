@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Support for temporarily setting the locale (e.g., to "C" or "POSIX") for (e.g.) parsing or printing
 // floating-point numbers in protocol headers, or calling toupper()/tolower() on human-input strings.
 // C++ header
@@ -44,10 +44,6 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #endif
 #endif
 
-#ifdef __APPLE__
-#define NEED_XLOCALE_H
-#endif // #ifdef __APPLE__
-
 #ifndef LOCALE_NOT_USED
 #include <locale.h>
 #ifndef NEWLOCALE_NOT_USED
@@ -57,11 +53,10 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #endif
 #endif
 
-#include "export.h"
 
 enum LocaleCategory { All, Numeric }; // define and implement more categories later, as needed
 
-class LIVEMEDIA_API Locale {
+class Locale {
 public:
   Locale(char const* newLocale, LocaleCategory category = All);
   virtual ~Locale();

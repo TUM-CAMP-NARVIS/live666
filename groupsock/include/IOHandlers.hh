@@ -13,8 +13,8 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// "mTunnel" multicast access service
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// "groupsock"
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // IO event handlers
 // C++ header
 
@@ -26,6 +26,6 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #endif
 
 // Handles incoming data on sockets:
-LIVEMEDIA_API void socketReadHandler(Socket* sock, int mask);
+void socketReadHandler(Socket* sock, int mask);
 
 #endif

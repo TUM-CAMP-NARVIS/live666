@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A filter that parses a DV input stream into DV frames to deliver to the downstream object
 // C++ header
 
@@ -30,7 +30,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #define DV_SAVED_INITIAL_BLOCKS_SIZE ((DV_NUM_BLOCKS_PER_SEQUENCE+6-1)*DV_DIF_BLOCK_SIZE)
     /* enough data to ensure that it contains an intact 6-block header (which occurs at the start of a 150-block sequence) */
 
-class LIVEMEDIA_API DVVideoStreamFramer: public FramedFilter {
+class DVVideoStreamFramer: public FramedFilter {
 public:
   static DVVideoStreamFramer*
   createNew(UsageEnvironment& env, FramedSource* inputSource,

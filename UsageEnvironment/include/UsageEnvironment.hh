@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Usage Environment
 // C++ header
 
@@ -37,8 +37,6 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "strDup.hh"
 #endif
 
-#include "export.h"
-
 #ifndef NULL
 #define NULL 0
 #endif
@@ -52,7 +50,7 @@ class TaskScheduler; // forward
 
 // An abstract base class, subclassed for each use of the library
 
-class LIVEMEDIA_API UsageEnvironment {
+class UsageEnvironment {
 public:
   Boolean reclaim();
       // returns True iff we were actually able to delete our object
@@ -105,7 +103,7 @@ typedef void TaskFunc(void* clientData);
 typedef void* TaskToken;
 typedef u_int32_t EventTriggerId;
 
-class LIVEMEDIA_API TaskScheduler {
+class TaskScheduler {
 public:
   virtual ~TaskScheduler();
 

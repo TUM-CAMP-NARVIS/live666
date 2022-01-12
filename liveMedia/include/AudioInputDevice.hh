@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // Generic audio input device (such as a microphone, or an input sound card)
 // C++ header
 
@@ -24,7 +24,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "FramedSource.hh"
 #endif
 
-class LIVEMEDIA_API AudioPortNames {
+class AudioPortNames {
 public:
   AudioPortNames();
   virtual ~AudioPortNames();
@@ -33,7 +33,7 @@ public:
   char** portName;
 };
 
-class LIVEMEDIA_API AudioInputDevice: public FramedSource {
+class AudioInputDevice: public FramedSource {
 public:
   unsigned char bitsPerSample() const { return fBitsPerSample; }
   unsigned char numChannels() const { return fNumChannels; }

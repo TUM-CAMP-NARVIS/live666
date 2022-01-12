@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // RTP sink for H.264 or H.265 video
 // C++ header
 
@@ -28,7 +28,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "FramedFilter.hh"
 #endif
 
-class LIVEMEDIA_API H264or5VideoRTPSink: public VideoRTPSink {
+class H264or5VideoRTPSink: public VideoRTPSink {
 protected:
   H264or5VideoRTPSink(int hNumber, // 264 or 265
 		      UsageEnvironment& env, Groupsock* RTPgs, unsigned char rtpPayloadFormat,

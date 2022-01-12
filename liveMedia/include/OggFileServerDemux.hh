@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2020 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2022 Live Networks, Inc.  All rights reserved.
 // A server demultiplexor for an Ogg file
 // C++ header
 
@@ -29,7 +29,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "OggFile.hh"
 #endif
 
-class LIVEMEDIA_API OggFileServerDemux: public Medium {
+class OggFileServerDemux: public Medium {
 public:
   typedef void (onCreationFunc)(OggFileServerDemux* newDemux, void* clientData);
   static void createNew(UsageEnvironment& env, char const* fileName,
@@ -64,6 +64,10 @@ private:
 
   static void onOggFileCreation(OggFile* newFile, void* clientData);
   void onOggFileCreation(OggFile* newFile);
+
+  static void onDemuxDeletion(void* clientData, OggDemux* demuxBeingDeleted);
+  void onDemuxDeletion(OggDemux* demuxBeingDeleted);
+  
 private:
   char const* fFileName; 
   onCreationFunc* fOnCreation;
